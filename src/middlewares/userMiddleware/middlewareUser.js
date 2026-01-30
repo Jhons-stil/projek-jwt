@@ -92,6 +92,7 @@ const cekDuplikat = async (req, res, next) => {
       "Maaf, nama sudah terdaftar, silakan masukan nama yang lain",
     );
   }
+  next();
 };
 module.exports = {
   cekPassword,
