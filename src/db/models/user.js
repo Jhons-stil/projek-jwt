@@ -47,6 +47,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: false,
       },
+      role: {
+        type: DataTypes.ENUM("peminjam", "pembeli", "pembaca"),
+        allowNull: false,
+      },
     },
     {
       sequelize,

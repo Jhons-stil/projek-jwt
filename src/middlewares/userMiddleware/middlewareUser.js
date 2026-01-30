@@ -27,14 +27,27 @@ const cekPassword = async (req, res, next) => {
   }
 };
 
-const cekInput = async (req, res, next) => {
-  const { nama_user, password_baru, email, alamat } = req.body;
-  if (!nama_user || !password_baru || !email || !alamat) {
+const cekInputUpdate = async (req, res, next) => {
+  const { nama_user, password_baru, email, alamat, role } = req.body;
+  if (!nama_user || !password_baru || !email || !alamat || !role) {
     return resGagal(
       res,
       404,
       "error",
-      "nama, password, email dan alamat harus diisi",
+      "nama, password, email, alamat, role harus diisi",
+    );
+  }
+  next();
+};
+
+const cekInput = async (req, res, next) => {
+  const { nama_user, password, email, alamat, role } = req.body;
+  if (!nama_user || !password || !email || !alamat || !role) {
+    return resGagal(
+      res,
+      404,
+      "error",
+      "nama, password, email, alamat, role harus diisi",
     );
   }
   next();
@@ -65,4 +78,26 @@ const cekEmail = async (req, res, next) => {
   }
   next();
 };
-module.exports = { cekPassword, cekInput, cekId, cekEmail };
+
+const cekDuplikat = async (req, res, next) => {
+  const { nama_user } = req.body;
+
+  const data = await User.findOne({ nama_user });
+
+  if (data) {
+    return resGagal(
+      res,
+      409,
+      "error",
+      "Maaf, nama sudah terdaftar, silakan masukan nama yang lain",
+    );
+  }
+};
+module.exports = {
+  cekPassword,
+  cekInputUpdate,
+  cekId,
+  cekEmail,
+  cekInput,
+  cekDuplikat,
+};

@@ -25,6 +25,10 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false,
       },
+      role: {
+        type: Sequelize.ENUM("peminjam", "pembeli", "pembaca"),
+        allowNull: false,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

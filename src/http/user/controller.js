@@ -11,12 +11,12 @@ const bcrypt = require("bcryptjs");
 
 const createUser = async (req, res) => {
   try {
-    const { nama_user, password, email, alamat } = req.body;
+    const { nama_user, password, email, alamat, role } = req.body;
 
     const salt = Number(process.env.BCRYPT_SALT);
     const passwrdAcak = await bcrypt.hash(password, salt);
 
-    const body = { nama_user, password: passwrdAcak, email, alamat };
+    const body = { nama_user, password: passwrdAcak, email, alamat, role };
     const data = await tambahUser(body);
     return resSukses(res, 201, "success", "Data berhasil ditambahkan", data);
   } catch (error) {
@@ -36,11 +36,11 @@ const readUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const id = req.params.id;
-    const { nama_user, password_baru, email, alamat } = req.body;
+    const { nama_user, password_baru, email, alamat, role } = req.body;
 
     const salt = Number(process.env.BCRYPT_SALT);
     const passwrdAcak = await bcrypt.hash(password_baru, salt);
-    const body = { nama_user, password: passwrdAcak, email, alamat };
+    const body = { nama_user, password: passwrdAcak, email, alamat, role };
     const data = await ubahUser(id, body);
 
     return resSukses(res, 200, "success", "Data berhasil diubah", data);
