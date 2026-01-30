@@ -36,7 +36,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       password: {
-        type: DataTypes.STRING(15),
+        type: DataTypes.STRING,
         allowNull: false,
       },
       email: {
@@ -45,6 +45,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       alamat: {
         type: DataTypes.TEXT,
+        allowNull: false,
+      },
+      role: {
+        type: DataTypes.ENUM("peminjam", "pembeli", "pembaca"),
         allowNull: false,
       },
     },
