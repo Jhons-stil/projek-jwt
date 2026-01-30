@@ -38,7 +38,7 @@ module.exports = (sequelize, DataTypes) => {
       tgl_pinjam: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: DataTypes.literal("CURRENT_TIMESTAMP"),
+        defaultValue: new Date(),
       },
       tgl_balik: {
         type: DataTypes.DATE,
