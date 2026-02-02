@@ -5,6 +5,7 @@ const {
   updateUser,
   deleteUser,
   getById,
+  loginUser,
 } = require("./controller.js");
 const {
   cekPassword,
@@ -18,6 +19,7 @@ const {
 const router = express.Router();
 
 router.post("/register", cekDuplikat, cekInput, cekEmail, createUser);
+router.post( "/login", loginUser )
 router.get("/", readUser);
 router.patch("/update/:id", cekId, cekInputUpdate, cekPassword, updateUser);
 router.delete("/delete/:id", cekId, deleteUser);
