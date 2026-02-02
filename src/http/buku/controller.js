@@ -3,8 +3,9 @@ const {
   cariBukuById,
   tambahBuku,
   ubahBuku,
-  hapusBuku
+  hapusBuku,
 } = require("./service.js");
+const path = require("path");
 
 const { resSukses, resGagal } = require("../../payloads/payload");
 
@@ -38,39 +39,35 @@ const createData = async (req, res) => {
       return resGagal(res, 401, "error", "Unauthorized");
     }
 
+    const { judul, harga, genre, stok } = req.body;
     if (!req.body) {
       return resGagal(res, 400, "error", "Request body kosong");
     }
 
-    const { judul, foto_buku, harga, genre, stok } = req.body;
-
     if (!judul || !harga || !genre) {
-      return resGagal(
-        res,
-        400,
-        "error",
-        "judul, harga, dan genre wajib diisi"
-      );
+      return resGagal(res, 400, "error", "judul, harga, dan genre wajib diisi");
     }
 
-    const data = {
+    let foto_buku = null;
+
+    if (req.file) {
+      foto_buku = path.basename(req.file.path);
+    }
+    const body = {
       judul,
-      foto_buku: foto_buku || null,
+      foto_buku,
       harga,
       genre,
       stok: stok || 0,
-      created_by: req.user.id
+      created_by: req.user.id,
     };
 
-    const result = await tambahBuku(data);
+    const result = await tambahBuku(body);
     return resSukses(res, 201, "success", "Buku berhasil ditambahkan", result);
   } catch (error) {
     return resGagal(res, 500, "error", error.message);
   }
 };
-
-
-
 
 const updateBuku = async (req, res) => {
   try {
@@ -109,6 +106,5 @@ module.exports = {
   getBukuById,
   createData,
   updateBuku,
-  deleteBuku
+  deleteBuku,
 };
-

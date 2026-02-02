@@ -1,4 +1,4 @@
-const { resSukses } = require("../../payloads/payload.js");
+const { resSukses, resGagal } = require("../../payloads/payload.js");
 const {
   tambahPembeli,
   tampilPembeli,
