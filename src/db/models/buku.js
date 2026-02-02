@@ -48,7 +48,7 @@ module.exports = (sequelize, DataTypes) => {
           "novel",
           "fiksi",
           "sejarah",
-          "pendiikan",
+          "pendidikan",
           "religius",
           "filsafat",
           "masakan",
@@ -59,6 +59,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      created_by: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+  }
     },
     {
       sequelize,

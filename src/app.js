@@ -1,6 +1,8 @@
 const express = require("express");
 const sequelize = require("./config/koneksi.js");
 const routerUser = require("./http/user/router.js");
+const routerPembaca = require("./http/pembaca/router.js");
+const routerPeminjam = require("./http/peminjam/router.js");
 const app = express();
 const PORT = 5000;
 app.use(express.json());
@@ -16,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 // });
 
 app.use("/api/user", routerUser);
+app.use("/api/pembaca", routerPembaca)
+app.use("/api/peminjam", routerPeminjam)
 
 app.listen(PORT, () => {
   console.log("server Berjalan.................");
