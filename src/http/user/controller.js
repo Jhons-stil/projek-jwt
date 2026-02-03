@@ -78,13 +78,8 @@ const updateUser = async (req, res) => {
     const { nama_user, password_baru, email, alamat, role } = req.body;
 
     const salt = Number(process.env.BCRYPT_SALT);
-<<<<<<< HEAD
-    const passwrdAcak = await bcrypt.hash(password_baru, salt);
-    const body = { nama_user, password: passwrdAcak, email, alamat, role };
-    const data = await ubahUser(id, body);
-=======
+
     const passwordAcak = await bcrypt.hash(password_baru, salt);
->>>>>>> Topa
 
     const body = {
       nama_user,

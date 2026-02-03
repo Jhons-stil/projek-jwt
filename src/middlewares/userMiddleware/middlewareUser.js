@@ -28,11 +28,6 @@ const cekPassword = async (req, res, next) => {
   }
 };
 
-<<<<<<< HEAD
-const cekInputUpdate = async (req, res, next) => {
-  const { nama_user, password_baru, email, alamat, role } = req.body;
-  if (!nama_user || !password_baru || !email || !alamat || !role) {
-=======
 /**
  * CEK INPUT CREATE USER
  */
@@ -40,29 +35,12 @@ const cekInput = (req, res, next) => {
   const { nama_user, password, email, alamat, role } = req.body;
 
   if (!nama_user || !password || !email || !alamat || !role) {
->>>>>>> Topa
     return resGagal(
       res,
       400,
       "error",
-<<<<<<< HEAD
-      "nama, password, email, alamat, role harus diisi",
-    );
-  }
-  next();
-};
 
-const cekInput = async (req, res, next) => {
-  const { nama_user, password, email, alamat, role } = req.body;
-  if (!nama_user || !password || !email || !alamat || !role) {
-    return resGagal(
-      res,
-      404,
-      "error",
-      "nama, password, email, alamat, role harus diisi",
-=======
       "nama, password, email, alamat, dan role wajib diisi",
->>>>>>> Topa
     );
   }
   next();
@@ -112,29 +90,6 @@ const cekEmail = (req, res, next) => {
   next();
 };
 
-<<<<<<< HEAD
-const cekDuplikat = async (req, res, next) => {
-  const { nama_user } = req.body;
-
-  const data = await User.findOne({ nama_user });
-
-  if (data) {
-    return resGagal(
-      res,
-      409,
-      "error",
-      "Maaf, nama sudah terdaftar, silakan masukan nama yang lain",
-    );
-  }
-  next();
-};
-module.exports = {
-  cekPassword,
-  cekInputUpdate,
-  cekId,
-  cekEmail,
-  cekInput,
-=======
 /**
  * CEK DUPLIKAT EMAIL
  */
@@ -154,6 +109,6 @@ module.exports = {
   cekInputUpdate,
   cekId,
   cekEmail,
->>>>>>> Topa
+
   cekDuplikat,
 };
