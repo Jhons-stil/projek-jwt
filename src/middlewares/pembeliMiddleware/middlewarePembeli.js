@@ -33,5 +33,4 @@ const cekInput = async (req, res, next) => {
 module.exports = {
   cekId,
   cekInput,
-  cekDuplikat,
 };
