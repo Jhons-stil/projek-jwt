@@ -27,7 +27,7 @@ module.exports = {
         allowNull: false,
       },
       status: {
-        type: Sequelize.ENUM("bagus", "rusak"),
+        type: Sequelize.ENUM("bagus", "rusak", "hilang"),
         allowNull: false,
       },
       bukuId: {

@@ -8,16 +8,30 @@ const {
   getById,
 } = require("./controller.js");
 const {
-  cekDuplikat,
   cekId,
 } = require("../../middlewares/pembeliMiddleware/middlewarePembeli.js");
-const { authJwt } = require("../../middlewares/middlewareJWT/middlewareJwt.js");
+const {
+  authJwt,
+  cekRole,
+} = require("../../middlewares/middlewareJWT/middlewareJwt.js");
 const router = express.Router();
 
-router.post("/create", authJwt, cekDuplikat, createPembeli);
-router.get("/", authJwt, readPembeli);
-router.patch("/update/:id", authJwt, cekId, updatePembeli);
-router.delete("/delete/:id", authJwt, cekId, deletePembeli);
-router.get("/:id", authJwt, cekId, getById);
+router.post("/create", authJwt, cekRole(["pembeli"]), createPembeli);
+router.get("/", authJwt, cekRole(["pembeli"]), readPembeli);
+router.patch(
+  "/update/:id",
+  authJwt,
+  cekRole(["pembeli"]),
+  cekId,
+  updatePembeli,
+);
+router.delete(
+  "/delete/:id",
+  authJwt,
+  cekRole(["pembeli"]),
+  cekId,
+  deletePembeli,
+);
+router.get("/:id", authJwt, cekRole(["pembeli"]), cekId, getById);
 
 module.exports = router;

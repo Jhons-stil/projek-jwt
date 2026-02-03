@@ -15,7 +15,10 @@ const {
   upload,
   cekFoto,
 } = require("../../middlewares/peminjamMiddleware/middlewarePeminjam.js");
-const { authJwt } = require("../../middlewares/middlewareJWT/middlewareJwt.js");
+const {
+  authJwt,
+  cekRole,
+} = require("../../middlewares/middlewareJWT/middlewareJwt.js");
 
 // const storage = multer.diskStorage({
 //   destination: (req, file, cb) => {
@@ -30,24 +33,33 @@ const { authJwt } = require("../../middlewares/middlewareJWT/middlewareJwt.js");
 
 const router = express.Router();
 
-router.get("/", authJwt, getPeminjam);
+router.get("/", authJwt, cekRole(["peminjam"]), getPeminjam);
 router.post(
   "/create",
   authJwt,
+  cekRole(["peminjam"]),
   upload.single("foto_buku"),
   cekInput,
   createPeminjam,
 );
-router.get("/:id", authJwt, cekId, getById);
+router.get("/:id", authJwt, cekRole(["peminjam"]), cekId, getById);
 router.put(
   "/update/:id",
   authJwt,
+  cekRole(["peminjam"]),
   upload.single("foto_buku"),
   cekFoto,
   cekId,
   cekInputUpdate,
   updatePeminjam,
 );
-router.delete("/delete/:id", authJwt, cekId, cekFoto, deletePeminjam);
+router.delete(
+  "/delete/:id",
+  authJwt,
+  cekRole(["peminjam"]),
+  cekId,
+  cekFoto,
+  deletePeminjam,
+);
 
 module.exports = router;

@@ -5,13 +5,15 @@ const {
   tampilPembeli,
   hapusPembeli,
   byId,
+  ubahPembeli,
 } = require("./service.js");
 
 const createPembeli = async (req, res) => {
   try {
-    const { nama_pembeli, userId, tgl_pembeli, bukuId } = req.body;
+    const userId = req.user.id;
+    const { tgl_pembeli, bukuId } = req.body;
 
-    const body = { nama_pembeli, userId, tgl_pembeli, bukuId };
+    const body = { userId, tgl_pembeli, bukuId };
     const data = await tambahPembeli(body);
     return resSukses(res, 201, "success", "Data berhasil ditambahkan", data);
   } catch (error) {
@@ -31,10 +33,11 @@ const readPembeli = async (req, res) => {
 const updatePembeli = async (req, res) => {
   try {
     const id = req.params.id;
-    const { nama_pembeli, userId, tgl_pembeli, bukuId } = req.body;
+    const userId = req.user.id;
+    const { tgl_pembeli, bukuId } = req.body;
 
-    const body = { nama_pembeli, userId, tgl_pembeli, bukuId };
-    const data = await ubahUser(id, body);
+    const body = { userId, tgl_pembeli, bukuId };
+    const data = await ubahPembeli(id, body);
 
     return resSukses(res, 200, "success", "Data berhasil diubah", data);
   } catch (error) {

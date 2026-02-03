@@ -27,4 +27,22 @@ const authJwt = (req, res, next) => {
   }
 };
 
-module.exports = { authJwt };
+const cekRole = (validasiRole) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return resGagal(res, 401, "error", "User tidak teridentifikasi");
+    }
+
+    if (validasiRole.includes(req.user.role)) {
+      next();
+    } else {
+      return resGagal(
+        res,
+        400,
+        "error",
+        "Akses ditolak Role anda pilih tidak di izinkan mengakses fitur ini !!!",
+      );
+    }
+  };
+};
+module.exports = { authJwt, cekRole };

@@ -12,8 +12,8 @@ const {
 const { getBuku, getBukuById, createData, updateBuku, deleteBuku } =
   bukuController;
 
-router.get("/", authJwt, getBuku);
-router.get("/cari/:id", authJwt, getBukuById);
+router.get("/", getBuku);
+router.get("/cari/:id", getBukuById);
 router.post(
   "/create",
   authJwt,

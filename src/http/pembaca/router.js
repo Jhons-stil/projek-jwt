@@ -1,18 +1,43 @@
 const express = require("express");
-const { 
-    getPembaca, createPembaca, updatePembaca, deletePembaca, getById
- } = require("./controller.js");
-const { cekId, cekInput, cekInputUpdate } = require("../../middlewares/pembacaMiddleware/middlewarePembaca.js");
+const {
+  getPembaca,
+  createPembaca,
+  updatePembaca,
+  deletePembaca,
+  getById,
+} = require("./controller.js");
+const {
+  cekId,
+  cekInput,
+  cekInputUpdate,
+} = require("../../middlewares/pembacaMiddleware/middlewarePembaca.js");
+const {
+  authJwt,
+  cekRole,
+} = require("../../middlewares/middlewareJWT/middlewareJwt.js");
 
 const router = express.Router();
 
-router.get("/", getPembaca);
-router.get("/detail/:id", cekId, getById);
+router.get("/", authJwt, cekRole(["pembaca"]), getPembaca);
+router.get("/detail/:id", authJwt, cekRole(["pembaca"]), cekId, getById);
 
-router.delete("/hapus/:id", cekId, deletePembaca);
+router.delete(
+  "/hapus/:id",
+  authJwt,
+  cekRole(["pembaca"]),
+  cekId,
+  deletePembaca,
+);
 
-router.post("/tambah", cekInput, createPembaca);
+router.post("/create", authJwt, cekRole(["pembaca"]), cekInput, createPembaca);
 
-router.patch("/ubah/:id", cekId, cekInputUpdate, updatePembaca);
+router.patch(
+  "/ubah/:id",
+  authJwt,
+  cekRole(["pembaca"]),
+  cekId,
+  cekInputUpdate,
+  updatePembaca,
+);
 
 module.exports = router;

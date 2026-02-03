@@ -38,8 +38,8 @@ module.exports = {
         allowNull: false,
       },
       created_by: {
-       type: Sequelize.INTEGER,
-       allowNull: false,
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       createdAt: {
         allowNull: false,

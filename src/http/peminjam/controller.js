@@ -31,13 +31,16 @@ const getById = async (req, res) => {
 
 const createPeminjam = async (req, res) => {
   try {
-    const { userId, tgl_balik, status, bukuId } = req.body;
+    const userId = Number(req.user.id);
+    const { tgl_balik, status, bukuId } = req.body;
 
     if (req.file) {
       console.log(req.file);
       foto_buku = path.basename(req.file.path);
     }
-    const body = { userId, tgl_balik, status, bukuId, foto_buku };
+
+    const buku = Number(bukuId);
+    const body = { userId, tgl_balik, status, bukuId: buku, foto_buku };
 
     const data = await tambahPeminjam(body);
     return resSukses(
@@ -55,7 +58,8 @@ const createPeminjam = async (req, res) => {
 const updatePeminjam = async (req, res) => {
   try {
     const id = req.params.id;
-    const { userId, tgl_balik, status, bukuId } = req.body;
+    const userId = req.user.id;
+    const { tgl_balik, status, bukuId } = req.body;
 
     let peminjamLama = req.peminjamLama;
     if (req.file) {

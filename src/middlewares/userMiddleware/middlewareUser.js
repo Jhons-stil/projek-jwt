@@ -3,12 +3,9 @@ const bcrypt = require("bcryptjs");
 const { byId } = require("../../http/user/service.js");
 const { resGagal } = require("../../payloads/payload.js");
 
-/**
- * CEK PASSWORD LAMA (WAJIB LOGIN / JWT)
- */
 const cekPassword = async (req, res, next) => {
   try {
-    const id = req.user.id; // AMBIL DARI JWT
+    const id = req.params.id;
     const { password_lama } = req.body;
 
     if (!password_lama) {
@@ -42,7 +39,7 @@ const cekInput = (req, res, next) => {
       res,
       400,
       "error",
-      "nama, password, email, alamat, dan role wajib diisi"
+      "nama, password, email, alamat, dan role wajib diisi",
     );
   }
   next();
@@ -55,12 +52,7 @@ const cekInputUpdate = (req, res, next) => {
   const { nama_user, password_baru, email, alamat, role } = req.body;
 
   if (!nama_user && !password_baru && !email && !alamat && !role) {
-    return resGagal(
-      res,
-      400,
-      "error",
-      "Minimal satu field harus diisi"
-    );
+    return resGagal(res, 400, "error", "Minimal satu field harus diisi");
   }
   next();
 };
@@ -89,8 +81,7 @@ const cekId = async (req, res, next) => {
  */
 const cekEmail = (req, res, next) => {
   const { email } = req.body;
-  const regexEmail =
-    /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+  const regexEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
   if (!email || !regexEmail.test(email)) {
     return resGagal(res, 400, "error", "Format email tidak valid");
@@ -106,12 +97,7 @@ const cekDuplikat = async (req, res, next) => {
 
   const data = await User.findOne({ where: { email } });
   if (data) {
-    return resGagal(
-      res,
-      409,
-      "error",
-      "Email sudah terdaftar"
-    );
+    return resGagal(res, 409, "error", "Email sudah terdaftar");
   }
   next();
 };
@@ -122,5 +108,5 @@ module.exports = {
   cekInputUpdate,
   cekId,
   cekEmail,
-  cekDuplikat
+  cekDuplikat,
 };

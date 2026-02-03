@@ -1,12 +1,23 @@
 const db = require("../../db/models/index.js");
-const { Pembaca } = db;
+const { Pembaca, User, Buku } = db;
 
 const tambahPembaca = async (body) => {
   return await Pembaca.create(body);
 };
 
 const tampilPembaca = async () => {
-  return await Pembaca.findAll();
+  return await Pembaca.findAll({
+    include: [
+      {
+        model: User,
+        as: "user",
+      },
+      {
+        model: Buku,
+        as: "buku",
+      },
+    ],
+  });
 };
 
 const ubahPembaca = async (id, body) => {
@@ -21,4 +32,10 @@ const hapusPembaca = async (id_pembaca) => {
 const byId = async (id) => {
   return await Pembaca.findByPk(id);
 };
-module.exports = { tambahPembaca, tampilPembaca, ubahPembaca, hapusPembaca, byId };
+module.exports = {
+  tambahPembaca,
+  tampilPembaca,
+  ubahPembaca,
+  hapusPembaca,
+  byId,
+};
