@@ -17,7 +17,7 @@ const loginUser = async (req, res) => {
     const { email, password } = req.body;
 
     const user = await User.findOne({
-      where: { email }
+      where: { email },
     });
 
     if (!user) {
@@ -30,26 +30,22 @@ const loginUser = async (req, res) => {
       return resGagal(res, 401, "error", "Password salah");
     }
 
-   const token = jwt.sign(
-  {
-    id: user.id_user,        
-    role: user.role,
-    email: user.email
-  },
-  process.env.JWT_SECRET,
-  { expiresIn: "1d" }
-);
+    const token = jwt.sign(
+      {
+        id: user.id_user,
+        role: user.role,
+        email: user.email,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
 
     return resSukses(res, 200, "success", "Login berhasil", {
-      token
+      token,
     });
   } catch (error) {
     return resGagal(res, 500, "error", error.message);
   }
-};
-
-module.exports = {
-  loginUser
 };
 
 const createUser = async (req, res) => {
@@ -83,15 +79,20 @@ const updateUser = async (req, res) => {
 
     const salt = Number(process.env.BCRYPT_SALT);
     const passwordAcak = await bcrypt.hash(password_baru, salt);
-    
-    const body = { nama_user, password_baru: passwordAcak, email, alamat, role };
+
+    const body = {
+      nama_user,
+      password_baru: passwordAcak,
+      email,
+      alamat,
+      role,
+    };
     const data = await ubahUser(id, body);
     return resSukses(res, 200, "success", "Data berhasil diubah", data);
   } catch (error) {
     return resGagal(res, 500, "error", error.message);
   }
 };
-
 
 const deleteUser = async (req, res) => {
   try {
@@ -112,4 +113,11 @@ const getById = async (req, res) => {
     return resGagal(res, 500, "error", error.message);
   }
 };
-module.exports = { createUser, readUser, updateUser, deleteUser, getById, loginUser };
+module.exports = {
+  createUser,
+  readUser,
+  updateUser,
+  deleteUser,
+  getById,
+  loginUser,
+};

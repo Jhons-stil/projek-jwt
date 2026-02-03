@@ -6,8 +6,9 @@ const {
   hapusBuku,
 } = require("./service.js");
 const path = require("path");
+const fs = require("fs/promises");
 
-const { resSukses, resGagal } = require("../../payloads/payload");
+const { resSukses, resGagal } = require("../../payloads/payload.js");
 
 const getBuku = async (req, res) => {
   try {
@@ -40,6 +41,7 @@ const createData = async (req, res) => {
     }
 
     const { judul, harga, genre, stok } = req.body;
+
     if (!req.body) {
       return resGagal(res, 400, "error", "Request body kosong");
     }
@@ -63,6 +65,7 @@ const createData = async (req, res) => {
     };
 
     const result = await tambahBuku(body);
+
     return resSukses(res, 201, "success", "Buku berhasil ditambahkan", result);
   } catch (error) {
     return resGagal(res, 500, "error", error.message);
@@ -71,8 +74,26 @@ const createData = async (req, res) => {
 
 const updateBuku = async (req, res) => {
   try {
-    const id = req.params.id;
+    const { id } = req.params;
     const body = req.body;
+    const bukuLama = req.bukuLama;
+    if (req.file) {
+      body.foto_buku = req.file.filename;
+
+      if (bukuLama.foto_buku) {
+        const pathFotoLama = path.join(
+          __dirname,
+          "../../uploads",
+          bukuLama.foto_buku,
+        );
+        try {
+          await fs.access(pathFotoLama);
+          await fs.unlink(pathFotoLama);
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
 
     const data = await ubahBuku(id, body);
 
@@ -82,6 +103,7 @@ const updateBuku = async (req, res) => {
 
     return resSukses(res, 200, "success", "Buku berhasil diubah", data);
   } catch (error) {
+    if (req.file) await fs.unlink(req.file.path);
     return resGagal(res, 500, "error", error.message);
   }
 };
@@ -89,6 +111,21 @@ const updateBuku = async (req, res) => {
 const deleteBuku = async (req, res) => {
   try {
     const id = req.params.id;
+    const buku = req.bukuLama;
+
+    if (buku.foto_buku) {
+      const pathFotoLama = path.join(
+        __dirname,
+        "../../uploads",
+        buku.foto_buku,
+      );
+      try {
+        await fs.access(pathFotoLama);
+        await fs.unlink(pathFotoLama);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     const data = await hapusBuku(id);
 
     if (data === 0) {

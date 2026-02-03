@@ -11,12 +11,13 @@ const {
   cekDuplikat,
   cekId,
 } = require("../../middlewares/pembeliMiddleware/middlewarePembeli.js");
+const { authJwt } = require("../../middlewares/middlewareJWT/middlewareJwt.js");
 const router = express.Router();
 
-router.post("/create", cekDuplikat, createPembeli);
-router.get("/", readPembeli);
-router.patch("/update/:id", cekId, updatePembeli);
-router.delete("/delete/:id", cekId, deletePembeli);
-router.get("/:id", cekId, getById);
+router.post("/create", authJwt, cekDuplikat, createPembeli);
+router.get("/", authJwt, readPembeli);
+router.patch("/update/:id", authJwt, cekId, updatePembeli);
+router.delete("/delete/:id", authJwt, cekId, deletePembeli);
+router.get("/:id", authJwt, cekId, getById);
 
 module.exports = router;

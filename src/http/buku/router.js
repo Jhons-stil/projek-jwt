@@ -6,6 +6,8 @@ const bukuController = require("./controller.js");
 const {
   cekInput,
   upload,
+  cekIdBuku,
+  cekId,
 } = require("../../middlewares/bukuMiddleware/middlewareBuku.js");
 const { getBuku, getBukuById, createData, updateBuku, deleteBuku } =
   bukuController;
@@ -19,7 +21,14 @@ router.post(
   cekInput,
   createData,
 );
-router.put("/update/:id", authJwt, updateBuku);
-router.delete("/delete/:id", authJwt, deleteBuku);
+
+router.patch(
+  "/update/:id",
+  authJwt,
+  upload.single("foto_buku"),
+  cekIdBuku,
+  updateBuku,
+);
+router.delete("/delete/:id", authJwt, cekId, cekIdBuku, deleteBuku);
 
 module.exports = router;
