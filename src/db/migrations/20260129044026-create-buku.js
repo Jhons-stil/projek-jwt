@@ -26,7 +26,7 @@ module.exports = {
           "novel",
           "fiksi",
           "sejarah",
-          "pendiikan",
+          "pendidikan",
           "religius",
           "filsafat",
           "masakan",
@@ -34,6 +34,10 @@ module.exports = {
         allowNull: false,
       },
       stok: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      created_by: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },

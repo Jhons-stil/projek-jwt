@@ -1,12 +1,24 @@
 const db = require("../../db/models/index.js");
-const { Pembeli } = db;
+
+const { Pembeli, User, Buku } = db;
 
 const tambahPembeli = async (body) => {
   return await Pembeli.create(body);
 };
 
 const tampilPembeli = async () => {
-  return await Pembeli.findAll();
+  return await Pembeli.findAll({
+    include: [
+      {
+        model: User,
+        as: "user",
+      },
+      {
+        model: Buku,
+        as: "buku",
+      },
+    ],
+  });
 };
 
 const ubahPembeli = async (id, body) => {

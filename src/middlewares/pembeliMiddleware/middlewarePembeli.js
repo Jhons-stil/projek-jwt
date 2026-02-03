@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 const db = require("../../db/models/index.js");
 const { Pembeli } = db;
+=======
+const { byId } = require("../../http/pembeli/service.js");
+const { resGagal } = require("../../payloads/payload.js");
+>>>>>>> Topa
 
 const cekId = async (req, res, next) => {
   const id = req.params.id;
@@ -30,6 +35,7 @@ const cekInput = async (req, res, next) => {
   next();
 };
 
+<<<<<<< HEAD
 const cekDuplikat = async (req, res, next) => {
   const { nama_pembeli } = req.body;
 
@@ -45,6 +51,8 @@ const cekDuplikat = async (req, res, next) => {
   }
   next();
 };
+=======
+>>>>>>> Topa
 module.exports = {
   cekId,
   cekInput,
