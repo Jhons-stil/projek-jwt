@@ -24,5 +24,5 @@ router.post("/login", loginUser);
 router.get("/", readUser);
 router.patch("/update/:id", cekId, cekInputUpdate, cekPassword, updateUser);
 router.delete("/delete/:id", cekId, deleteUser);
-router.get("/:id", cekId, getById);
+router.get("/cari/:id", cekId, getById);
 module.exports = router;

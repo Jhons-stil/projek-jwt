@@ -42,7 +42,7 @@ router.post(
   cekInput,
   createPeminjam,
 );
-router.get("/:id", authJwt, cekRole(["peminjam"]), cekId, getById);
+router.get("/cari/:id", authJwt, cekRole(["peminjam"]), cekId, getById);
 router.put(
   "/update/:id",
   authJwt,

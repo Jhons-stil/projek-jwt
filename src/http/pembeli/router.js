@@ -32,6 +32,6 @@ router.delete(
   cekId,
   deletePembeli,
 );
-router.get("/:id", authJwt, cekRole(["pembeli"]), cekId, getById);
+router.get("/cari/:id", authJwt, cekRole(["pembeli"]), cekId, getById);
 
 module.exports = router;
