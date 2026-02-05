@@ -69,7 +69,12 @@ const register = async (req, res) => {
 
     const salt = Number(process.env.BCRYPT_SALT);
     const passwordAcak = await bcrypt.hash(password, salt);
-    const body = { nama_user, password: passwordAcak, email, alamat };
+    const body = {
+      nama_user,
+      password: passwordAcak,
+      email,
+      alamat,
+    };
     const data = await tambahUser(body);
     return resSukses(res, 201, "success", "Data berhasil register", data);
   } catch (error) {
