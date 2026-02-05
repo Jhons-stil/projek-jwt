@@ -110,15 +110,12 @@ const updatePassword = async (req, res) => {
     const { password_lama } = req.body;
 
     const salt = Number(process.env.BCRYPT_SALT);
-    const passwordAcak = bcrypt.hash;
+    const passwordAcak = await bcrypt.hash(password_lama, salt);
     const body = {
-      nama_user,
-
-      alamat,
-      role,
+      password_lama: passwordAcak,
     };
     const data = await ubahUser(id, body);
-    return resSukses(res, 200, "success", "Data berhasil diubah", data);
+    return resSukses(res, 200, "success", "Password berhasil diubah", data);
   } catch (error) {
     return resGagal(res, 500, "error", error.message);
   }
@@ -150,4 +147,5 @@ module.exports = {
   deleteUser,
   getById,
   loginUser,
+  updatePassword,
 };

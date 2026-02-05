@@ -47,10 +47,28 @@ const cekInput = (req, res, next) => {
 };
 
 /**
+ * CEK INPUT CREATE USER
+ */
+const cekRegister = (req, res, next) => {
+  const { nama_user, password, email, alamat } = req.body;
+
+  if (!nama_user || !password || !email || !alamat) {
+    return resGagal(
+      res,
+      400,
+      "error",
+
+      "nama, password, email, alamat wajib diisi",
+    );
+  }
+  next();
+};
+
+/**
  * CEK INPUT UPDATE USER
  */
 const cekInputUpdate = (req, res, next) => {
-  const { nama_user, password_baru, email, alamat, role } = req.body;
+  const { nama_user, alamat, role } = req.body;
 
   if (!nama_user && !alamat && !role) {
     return resGagal(res, 400, "error", "Minimal satu field harus diisi");
@@ -109,6 +127,6 @@ module.exports = {
   cekInputUpdate,
   cekId,
   cekEmail,
-
+  cekRegister,
   cekDuplikat,
 };
