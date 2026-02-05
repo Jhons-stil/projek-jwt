@@ -6,6 +6,7 @@ const {
   deleteUser,
   getById,
   loginUser,
+  register,
 } = require("./controller.js");
 const {
   cekPassword,
@@ -18,11 +19,12 @@ const {
 
 const router = express.Router();
 
-router.post("/register", cekInput, cekDuplikat, cekEmail, createUser);
+router.post("/create", cekInput, cekDuplikat, cekEmail, createUser);
+router.post("/register", cekInput, cekDuplikat, cekEmail, register);
 router.post("/login", loginUser);
 
 router.get("/", readUser);
-router.patch("/update/:id", cekId, cekInputUpdate, cekPassword, updateUser);
+router.patch("/update/:id", cekId, cekInputUpdate, updateUser);
 router.delete("/delete/:id", cekId, deleteUser);
 router.get("/cari/:id", cekId, getById);
 module.exports = router;

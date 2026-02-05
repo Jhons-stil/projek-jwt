@@ -63,6 +63,20 @@ const createUser = async (req, res) => {
   }
 };
 
+const register = async (req, res) => {
+  try {
+    const { nama_user, password, email, alamat } = req.body;
+
+    const salt = Number(process.env.BCRYPT_SALT);
+    const passwordAcak = await bcrypt.hash(password, salt);
+    const body = { nama_user, password: passwordAcak, email, alamat };
+    const data = await tambahUser(body);
+    return resSukses(res, 201, "success", "Data berhasil register", data);
+  } catch (error) {
+    return resGagal(res, 500, "error", error.message);
+  }
+};
+
 const readUser = async (req, res) => {
   try {
     const data = await tampilUser();
@@ -75,16 +89,11 @@ const readUser = async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const id = req.params.id;
-    const { nama_user, password_baru, email, alamat, role } = req.body;
-
-    const salt = Number(process.env.BCRYPT_SALT);
-
-    const passwordAcak = await bcrypt.hash(password_baru, salt);
+    const { nama_user, alamat, role } = req.body;
 
     const body = {
       nama_user,
-      password_baru: passwordAcak,
-      email,
+
       alamat,
       role,
     };
@@ -95,6 +104,25 @@ const updateUser = async (req, res) => {
   }
 };
 
+const updatePassword = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { password_lama } = req.body;
+
+    const salt = Number(process.env.BCRYPT_SALT);
+    const passwordAcak = bcrypt.hash;
+    const body = {
+      nama_user,
+
+      alamat,
+      role,
+    };
+    const data = await ubahUser(id, body);
+    return resSukses(res, 200, "success", "Data berhasil diubah", data);
+  } catch (error) {
+    return resGagal(res, 500, "error", error.message);
+  }
+};
 const deleteUser = async (req, res) => {
   try {
     const id = req.params.id;
@@ -116,6 +144,7 @@ const getById = async (req, res) => {
 };
 module.exports = {
   createUser,
+  register,
   readUser,
   updateUser,
   deleteUser,

@@ -14,6 +14,7 @@ const {
   cekInputUpdate,
   upload,
   cekFoto,
+  cekTgl,
 } = require("../../middlewares/peminjamMiddleware/middlewarePeminjam.js");
 const {
   authJwt,
@@ -40,6 +41,7 @@ router.post(
   cekRole(["peminjam"]),
   upload.single("foto_buku"),
   cekInput,
+  cekTgl,
   createPeminjam,
 );
 router.get("/cari/:id", authJwt, cekRole(["peminjam"]), cekId, getById);
@@ -50,6 +52,7 @@ router.put(
   upload.single("foto_buku"),
   cekFoto,
   cekId,
+  cekTgl,
   cekInputUpdate,
   updatePeminjam,
 );

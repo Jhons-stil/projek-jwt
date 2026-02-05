@@ -18,9 +18,9 @@ const cekId = async (req, res, next) => {
 };
 
 const cekInput = async (req, res, next) => {
-  const { userId, status, bukuId } = req.body;
-  if (!userId || !status || !bukuId) {
-    return resGagal(res, 400, "error", "userId, status, bukuId harus diisi");
+  const { status, bukuId } = req.body;
+  if (!status || !bukuId) {
+    return resGagal(res, 400, "error", " status, bukuId harus diisi");
   }
   next();
 };

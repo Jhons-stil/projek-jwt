@@ -52,7 +52,7 @@ const cekInput = (req, res, next) => {
 const cekInputUpdate = (req, res, next) => {
   const { nama_user, password_baru, email, alamat, role } = req.body;
 
-  if (!nama_user && !password_baru && !email && !alamat && !role) {
+  if (!nama_user && !alamat && !role) {
     return resGagal(res, 400, "error", "Minimal satu field harus diisi");
   }
   next();

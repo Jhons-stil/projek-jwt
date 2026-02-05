@@ -47,26 +47,26 @@ const cekId = async (req, res, next) => {
 };
 
 const cekInput = async (req, res, next) => {
-  const { userId, tgl_balik, status, bukuId } = req.body;
-  if (!userId || !tgl_balik || !status || !bukuId) {
+  const { tgl_balik, status, bukuId } = req.body;
+  if (!tgl_balik || !status || !bukuId) {
     return resGagal(
       res,
       400,
       "error",
-      "userId, tgl_balik, status, bukuId harus diisi",
+      " tgl_balik, status, bukuId harus diisi",
     );
   }
   next();
 };
 
 const cekInputUpdate = async (req, res, next) => {
-  const { userId, tgl_balik, status, bukuId } = req.body;
-  if (!userId || !tgl_balik || !status || !bukuId) {
+  const { tgl_balik, status, bukuId } = req.body;
+  if (!tgl_balik || !status || !bukuId) {
     return resGagal(
       res,
       400,
       "error",
-      "userId, tgl_balik, status, bukuId harus diisi",
+      " tgl_balik, status, bukuId harus diisi",
     );
   }
   next();
@@ -91,10 +91,26 @@ const cekFoto = async (req, res, next) => {
   }
 };
 
+const cekTgl = (req, res, next) => {
+  const { tgl_balik } = req.body;
+  const tglInput = new Date(tgl_balik);
+  const tglNow = new Date();
+
+  if (tglInput < tglNow) {
+    return resGagal(
+      res,
+      400,
+      "error",
+      "tanggal pengembalian tidak boleh tanggal yang sudah lewat!!!",
+    );
+  }
+};
+
 module.exports = {
   cekId,
   cekInput,
   cekInputUpdate,
   upload,
   cekFoto,
+  cekTgl,
 };
